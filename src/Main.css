@@ -20,39 +20,96 @@ body {
   text-align-last: center;
 }
 
-.sectionText{
-    font-size: 30px;
+.cartButton{
+    width: 100%;
+    height: 50px;
+    border: none;
+    color:#0099ff;
+    font-size: 20px;
 }
 
-.filterDiv .filterText{
-    margin-inline: auto;
-    border: 1px dotted black;
-    width: 90%;
-    min-height: 100px;
+.sectionText {
+  font-size: 30px;
+  color:#0099ff;
 }
 
-.filterDiv .filterSize{
-    margin-inline: auto;
-    border: 1px dotted black;
-    width: 90%;
-    min-height: 100px;
- 
+.filterDiv .filterText {
+  margin-inline: auto;
+  border: 1px dotted black;
+  width: 90%;
+  min-height: 100px;
 }
 
-.filterDiv .filterPrice{
-    margin-inline: auto;
-    border: 1px dotted black;
-    width: 90%;
-    min-height: 100px;
-
+.filterDiv .filterSize {
+  margin-inline: auto;
+  border: 1px dotted black;
+  width: 90%;
+  min-height: 100px;
 }
 
+.filterDiv .filterPrice {
+  margin-inline: auto;
+  border: 1px dotted black;
+  width: 90%;
+  min-height: 100px;
+}
 
 .productDiv {
   width: 80%;
   min-height: 500px;
   background-color: #f1f1f1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.productDiv .item {
+  min-width: 250px;
+  min-height: 466px;
+}
+
+.productimage {
+  width: 250px;
+  height: 300px;
+}
+
+.productTitle {
+    max-height: 60px;
+    text-align: center;
+}
+
+.productTitle *{
+    line-height: 30px;
+}
+
+.productPrice {
+    max-height: 30px;
+    text-align: center;
+}
+
+.productDiscounted {
+    max-height: 30px;
+    text-align: center;
+
+}
+
+.productPrice *, .productDiscounted *{
+    line-height: 30px;
 }
 
 
+.addtocart *{
+    height: 40px;
+    width: 80%;
+    background-color: #0099ff;
+    border: none;
+    font-size: 15px;
+}
 
+.cart {
+    position: absolute;
+    z-index: 2;
+    width: 80%;
+    min-height: 500px;
+    background-color: #f1f1f1;
+}
