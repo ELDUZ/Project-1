@@ -1,3 +1,58 @@
-.body {
-    background-color: red;
+body {
+  padding: 0px;
+  margin: 0px;
+  text-align-last: center;
 }
+
+.body {
+  width: 80%;
+  min-height: 500px;
+  padding: 0px;
+  margin: 50px auto;
+  display: inline-flex;
+}
+
+.filterDiv {
+  width: 20%;
+  min-height: 500px;
+  background-color: #f1f1f1;
+  border-right: 1px dotted black;
+  text-align-last: center;
+}
+
+.sectionText{
+    font-size: 30px;
+}
+
+.filterDiv .filterText{
+    margin-inline: auto;
+    border: 1px dotted black;
+    width: 90%;
+    min-height: 100px;
+}
+
+.filterDiv .filterSize{
+    margin-inline: auto;
+    border: 1px dotted black;
+    width: 90%;
+    min-height: 100px;
+ 
+}
+
+.filterDiv .filterPrice{
+    margin-inline: auto;
+    border: 1px dotted black;
+    width: 90%;
+    min-height: 100px;
+
+}
+
+
+.productDiv {
+  width: 80%;
+  min-height: 500px;
+  background-color: #f1f1f1;
+}
+
+
+
