@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './Main.css'
 import Image from './images/1.jpg'
+import axios from 'axios'
+
+axios.get('127.0.0.1:3001/index').then(resp => {
+  console.log(resp.data)
+})
 
 function Main() {
   const [list, addtolist] = useState({})
@@ -15,10 +20,14 @@ function Main() {
   }
 
   const addTocard = (id) => {
-    const exists = list.includes(id)
+    const exists = id in list
+    const key = id
     if (!exists) {
-      addtolist((list) => id: {quantity: 1}, ...list )
-      // addtolist((list) => [{ product: id, quantity: 1 }, ...list])
+      list[key] = { quantity: 1 }
+      addtolist((current) => ({ ...current }))
+    } else {
+      list[key].quantity += 1
+      addtolist((current) => ({ ...current }))
     }
   }
 
@@ -127,9 +136,21 @@ function Main() {
         </div>
       </div>
       <div className="cart" style={{ display: shownorhidden }}>
-        <button onClick={ShiwHideCart} className="cartButton">
-          Cart
-        </button>
+        <div className="showorhide">
+          <button onClick={ShiwHideCart} className="cartButton">
+            Cart
+          </button>
+        </div>
+        <div className="productsincart">
+          {/* <div className="cartitem">
+            <div className="image">
+              <img className="image" src={Image} />
+            </div>
+            <div className='title'>
+
+            </div>
+          </div> */}
+        </div>
       </div>
     </div>
   )
