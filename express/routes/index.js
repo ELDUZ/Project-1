@@ -6,9 +6,11 @@ var productModel = require('../models/productModel');
 
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  const product = 
-  res.send(200);
+router.get('/', async function(req, res, next) {
+  const product = await productModel.find({});
+  res.status(201)
+  res.json(product)
+  
 });
 
 module.exports = router;

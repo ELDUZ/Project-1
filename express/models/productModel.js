@@ -6,7 +6,7 @@ var productSchema = new mongoose.Schema({
     title:String,
     size:String,
     price:Number,
-    discounterprice:Number
+    discountedprice:Number
 });
 
 

@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import './Main.css'
-import Image from './images/1.jpg'
+import Image from './images/tshirt.jpg'
 import axios from 'axios'
 
-axios.get('127.0.0.1:3001/index').then(resp => {
-  console.log(resp.data)
-})
-
 function Main() {
-  const [list, addtolist] = useState({})
+  const [cartlist, addtocartlist] = useState({})
   const [shownorhidden, change] = useState('none')
+  const [products, setproducts] = useState([])
+
+  axios
+    .get('http://127.0.0.1:3002')
+    .then(async function (response) {
+      setproducts(await response.data)
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
 
   const ShiwHideCart = () => {
     if (shownorhidden === 'none') {
@@ -20,20 +26,55 @@ function Main() {
   }
 
   const addTocard = (id) => {
-    const exists = id in list
+    const exists = id in cartlist
     const key = id
     if (!exists) {
-      list[key] = { quantity: 1 }
-      addtolist((current) => ({ ...current }))
+      cartlist[key] = { quantity: 1 }
+      addtocartlist((current) => ({ ...current }))
     } else {
-      list[key].quantity += 1
-      addtolist((current) => ({ ...current }))
+      cartlist[key].quantity += 1
+      addtocartlist((current) => ({ ...current }))
     }
   }
 
+  const productList = products.map((product) => (
+    <div className="item" key={product.productid}>
+      <div className="">
+        <img className="productimage" src={Image} />
+      </div>
+      <div className="productTitle">
+        <b>{product.title}</b>
+      </div>
+      <div className="productPrice">
+        <b>{product.price}TL</b>
+      </div>
+      <div className="productDiscounted">
+        <b>{product.price}TL</b>
+      </div>
+      <div className="addtocart">
+        <button onClick={() => addTocard(product.productid)}>
+          Add to cart
+        </button>
+      </div>
+    </div>
+  ))
+
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(list))
-  }, [list])
+    localStorage.setItem('cart', JSON.stringify(cartlist))
+  }, [cartlist])
+
+  // setcartproducts(JSON.parse(localStorage.getItem('cart')))
+
+  // const cartstorage = () => {
+  //   localStorage
+  // }
+
+  // const increase = () => {
+  //   setcount((count) => count + 1)
+  // }
+  // const decrease = () => {
+  //   setcount((count) => count - 1)
+  // }
 
   return (
     <div className="body">
@@ -48,93 +89,7 @@ function Main() {
         <div className="filterSize"></div>
         <div className="filterPrice"></div>
       </div>
-      <div className="productDiv">
-        <div className="item">
-          <div className="">
-            <img className="productimage" src={Image} />
-          </div>
-          <div className="productTitle">
-            <b>1 JOGGING FIT PANTOLON</b>
-          </div>
-          <div className="productPrice">
-            <b>659,95 TL</b>
-          </div>
-          <div className="productDiscounted">
-            <b>759,95 TL</b>
-          </div>
-          <div className="addtocart">
-            <button onClick={() => addTocard(0)}>Add to cart</button>
-          </div>
-        </div>
-        <div className="item">
-          <div className="">
-            <img className="productimage" src={Image} />
-          </div>
-          <div className="productTitle">
-            <b>2 JOGGING FIT PANTOLON</b>
-          </div>
-          <div className="productPrice">
-            <b>659,95 TL</b>
-          </div>
-          <div className="productDiscounted">
-            <b>759,95 TL</b>
-          </div>
-          <div className="addtocart">
-            <button onClick={() => addTocard(1)}>Add to cart</button>
-          </div>
-        </div>
-        <div className="item">
-          <div className="">
-            <img className="productimage" src={Image} />
-          </div>
-          <div className="productTitle">
-            <b>3 JOGGING FIT PANTOLON</b>
-          </div>
-          <div className="productPrice">
-            <b>659,95 TL</b>
-          </div>
-          <div className="productDiscounted">
-            <b>759,95 TL</b>
-          </div>
-          <div className="addtocart">
-            <button onClick={() => addTocard(2)}>Add to cart</button>
-          </div>
-        </div>
-        <div className="item">
-          <div className="">
-            <img className="productimage" src={Image} />
-          </div>
-          <div className="productTitle">
-            <b>4 JOGGING FIT PANTOLON</b>
-          </div>
-          <div className="productPrice">
-            <b>659,95 TL</b>
-          </div>
-          <div className="productDiscounted">
-            <b>759,95 TL</b>
-          </div>
-          <div className="addtocart">
-            <button onClick={() => addTocard(3)}>Add to cart</button>
-          </div>
-        </div>
-        <div className="item">
-          <div className="">
-            <img className="productimage" src={Image} />
-          </div>
-          <div className="productTitle">
-            <b>5 JOGGING FIT PANTOLON</b>
-          </div>
-          <div className="productPrice">
-            <b>659,95 TL</b>
-          </div>
-          <div className="productDiscounted">
-            <b>759,95 TL</b>
-          </div>
-          <div className="addtocart">
-            <button onClick={() => addTocard(4)}>Add to cart</button>
-          </div>
-        </div>
-      </div>
+      <div className="productDiv">{productList}</div>
       <div className="cart" style={{ display: shownorhidden }}>
         <div className="showorhide">
           <button onClick={ShiwHideCart} className="cartButton">
@@ -142,14 +97,29 @@ function Main() {
           </button>
         </div>
         <div className="productsincart">
-          {/* <div className="cartitem">
-            <div className="image">
+          <div className="cartitem">
+            <div className="section1">
               <img className="image" src={Image} />
             </div>
-            <div className='title'>
-
+            <div className="section2">
+              <div className="title">
+                <b>title of product which is in cart</b>
+              </div>
+              <div className="size">
+                <b>size of product which is in cart</b>
+              </div>
             </div>
-          </div> */}
+            <div className="section3">
+              <div className="count">
+                <div className="counter">
+                  {/* <input type="number" readOnly value={itemcountoncart} />
+                  <button onClick={increase}>+</button>
+                  <button onClick={decrease}>-</button> */}
+                </div>
+              </div>
+              <div className="price"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
